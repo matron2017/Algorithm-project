@@ -395,18 +395,6 @@ int Datastructures::total_net_tax(TownID id)
 
 
 
-//
-//
-//
-//
-//
-// Phase 2 operations
-//
-//
-//
-//
-
-
 void Datastructures::clear_all()
 {
     // The clear () algorithm removes each member from the container. Approximately O(n),
