@@ -67,7 +67,7 @@ struct pair_hash
 
 //
 //
-// *My own implementation ends here, but continues again below.
+// *My own implementations ends here, but continue below again.
 
 
 
@@ -153,7 +153,7 @@ struct id_distance{
 
 //
 //
-// *My own implementation ends here, but continues again below.
+// *My own implementations ends here, but continue below again.
 
 
 // This exception class is there just so that the user interface can notify
@@ -174,7 +174,7 @@ private:
 
 
 
-// I have impelemented all the datastructures and functions below by myself.
+// I have impelemented all the datastructures and functions below by myself. *
 //
 //
 
@@ -278,7 +278,7 @@ private:
     //Breadth-First Search for function least_towns_route
     void BFS(TownID fromid, std::queue<TownID> queue_);
 
-    //Syvyys-ensin-haku silmukan löytämistä varten.
+    //Depth-first Search for finding a cycle
     TownID DFS_for_cycle_road(TownID fromid);
 
 

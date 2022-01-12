@@ -1,11 +1,13 @@
-This is a project I made in a course. 
+This is a project I worked on in a course. 
 My goal was to produce code that runs as efficiently as possible.
 
 I have marked the parts which I have done myself.
-I implemented the functions and data structure for the program, but the UI files were given to me in advance.
+I implemented the functions and data structure for the program.
+The UI files were given to me in advance, so I haven't done them myself.
 The functions and data structures I implement are in files: datastructures(hh/cc) 
 I haven't touched following files at all: "mainprogram.(hh/cc), and mainwindow.(hh/cc/ui)".
-Below is a explanation for have this program works.
+ 
+Below is a explanation for how this program works:
 
 The topic of this programming project is a program which records information about
 towns (name, coordinates, and collected tax revenue), and towns can be printed out in different
@@ -19,6 +21,32 @@ their own. Additionally town x has a master town m. In this case, town v1's tota
 (because 10 % is paid as tax to x), town v2's total net tax is 5 (because 10 % of 5 is rounded down to
 zero). Town x's total net tax is 19 (20 + 1 from v1 (and 0 from v2) = 21, from which 10 % (rounded
 down to 2) is paid to m, which makes 19 in total for x's total net tax).
+
+
+A road always goes directly between two towns, and it can be travelled in either
+direction. The length of a road is the same as the distance (euclidean) between the towns rounded down to an integer
+
+
+A route is a series of roads, which are “connected” so that the next road starts from
+the town where the previous one ends. The length of a route is the sum of the lengths of the
+roads it contains. A route cannot directly return using the same road that was used to arrive
+to a town.
+
+
+A route has a cycle, if while travelling the route you arrive again to a town through
+which the route has already passed
+
+
+When the program is run, it waits for commands explained below. The commands, whose
+explanation mentions a member function, call the respective member function of the Datastructure
+class (implemented by students). Some commands are completely implemented by the code
+provided by the course.
+If the program is given a file as a command line parameter, the program executes commands from
+that file and then quits.
+The operations below are listed in the order in which we recommend them to be implemented (of
+course you should first design the class taking into account all operations).
+
+
 
 Commands of the code explained:
 
