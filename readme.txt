@@ -24,7 +24,7 @@ down to 2) is paid to m, which makes 19 in total for x's total net tax).
 
 
 A road always goes directly between two towns, and it can be travelled in either
-direction. The length of a road is the same as the distance (euclidean) between the towns rounded down to an integer
+direction. The length of a road is the same as the distance (euclidean) between the towns rounded down to an integer.
 
 
 A route is a series of roads, which are “connected” so that the next road starts from
@@ -34,7 +34,7 @@ to a town.
 
 
 A route has a cycle, if while travelling the route you arrive again to a town through
-which the route has already passed
+which the route has already passed.
 
 
 When the program is run, it waits for commands explained below. The commands, whose
