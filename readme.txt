@@ -1,7 +1,8 @@
 This is a project I worked on in a course. 
 My goal was to produce code that runs as efficiently as possible.
 
-I have marked the parts in code which I have done by myself.
+I have marked the parts in code which I have done by myself. I also wrote those same parts to
+file "Algorithm_project, self-written parts" .
 I implemented functions and data structure for the program in "datastructures" files.
 The UI files were given to me in advance, so I haven't done them myself.
 The functions and data structures I implement are in files: datastructures(hh/cc) 
