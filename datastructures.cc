@@ -862,6 +862,116 @@ std::vector<TownID> Datastructures::shortest_route(TownID fromid, TownID toid)
 
 Distance Datastructures::trim_road_network()
 {
-    throw NotImplemented("trim_road_network()");
-}
+    // Kruskal with union-find: O(E log E) time and O(V + E) auxiliary space.
 
+    // Collect all edges once (each undirected road appears in both directions)
+    struct Edge {
+        TownID town1;
+        TownID town2;
+        Distance dist;
+    };
+
+    std::vector<Edge> edges;
+    std::set<std::pair<TownID, TownID>> seen_edges;
+
+    for (auto& town_pair : towns) {
+        TownID town_id = town_pair.first;
+        for (auto& neighbor_pair : town_pair.second.to_neighbours) {
+            TownID neighbor_id = neighbor_pair.first;
+            Distance distance = neighbor_pair.second;
+
+            // Skip self-loops
+            if (town_id == neighbor_id) {
+                continue;
+            }
+
+            // Collect each undirected road exactly once
+            std::pair<TownID, TownID> edge_key = town_id < neighbor_id ?
+                std::make_pair(town_id, neighbor_id) :
+                std::make_pair(neighbor_id, town_id);
+
+            if (seen_edges.find(edge_key) == seen_edges.end()) {
+                edges.push_back({town_id, neighbor_id, distance});
+                seen_edges.insert(edge_key);
+            }
+        }
+    }
+
+    // Sort by distance, then by first town ID, then by second town ID
+    std::sort(edges.begin(), edges.end(), [](const Edge& a, const Edge& b) {
+        if (a.dist != b.dist) return a.dist < b.dist;
+
+        TownID a_first = a.town1 < a.town2 ? a.town1 : a.town2;
+        TownID a_second = a.town1 < a.town2 ? a.town2 : a.town1;
+        TownID b_first = b.town1 < b.town2 ? b.town1 : b.town2;
+        TownID b_second = b.town1 < b.town2 ? b.town2 : b.town1;
+
+        if (a_first != b_first) return a_first < b_first;
+        return a_second < b_second;
+    });
+
+    // Initialize union-find
+    std::unordered_map<TownID, int> town_to_index;
+    std::vector<int> parent;
+    std::vector<int> rank;
+
+    int index = 0;
+    for (auto& town_pair : towns) {
+        town_to_index[town_pair.first] = index;
+        parent.push_back(index);
+        rank.push_back(0);
+        index++;
+    }
+
+    // Union-find operations
+    std::function<int(int)> find = [&](int x) -> int {
+        if (parent[x] != x) {
+            parent[x] = find(parent[x]);  // Path compression
+        }
+        return parent[x];
+    };
+
+    auto unite = [&](int x, int y) -> bool {
+        int root_x = find(x);
+        int root_y = find(y);
+
+        if (root_x == root_y) return false;  // Already in same component
+
+        // Union by rank
+        if (rank[root_x] < rank[root_y]) {
+            parent[root_x] = root_y;
+        } else if (rank[root_x] > rank[root_y]) {
+            parent[root_y] = root_x;
+        } else {
+            parent[root_y] = root_x;
+            rank[root_x]++;
+        }
+        return true;
+    };
+
+    // Kruskal: select edges
+    std::vector<Edge> selected_edges;
+    for (const auto& edge : edges) {
+        int idx1 = town_to_index[edge.town1];
+        int idx2 = town_to_index[edge.town2];
+
+        if (unite(idx1, idx2)) {
+            selected_edges.push_back(edge);
+        }
+    }
+
+    // Clear old road adjacency maps
+    for (auto& town_pair : towns) {
+        town_pair.second.to_neighbours.clear();
+    }
+
+    // Reinsert selected roads in both directions
+    Distance total = 0;
+    for (const auto& edge : selected_edges) {
+        towns[edge.town1].to_neighbours[edge.town2] = edge.dist;
+        towns[edge.town2].to_neighbours[edge.town1] = edge.dist;
+        total += edge.dist;
+    }
+
+    return total;
+}

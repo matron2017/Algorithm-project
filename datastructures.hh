@@ -242,7 +242,6 @@ public:
 
     std::vector<TownID> shortest_route(TownID, TownID);
 
-    // Not implemented
     Distance trim_road_network();
 
 private:

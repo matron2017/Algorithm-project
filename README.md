@@ -18,6 +18,8 @@ of the course framework.
 - Finding a route with the fewest towns using breadth-first search
 - Finding shortest routes by road length using Dijkstra's algorithm
 - Detecting cycles in the road network
+- Reducing the road network to a minimum spanning forest with Kruskal's
+  algorithm
 
 Road lengths are calculated from the Euclidean distance between town
 coordinates and rounded down to an integer.
@@ -63,6 +65,12 @@ g++ -std=c++17 -Wall -Wextra -pedantic \
 /tmp/shortest_route_test
 ```
 
-## Unfinished operation
+Compile and run the road-network trimming test with:
 
-`trim_road_network` is declared but not implemented yet.
+```bash
+g++ -std=c++17 -Wall -Wextra -pedantic \
+  datastructures.cc tests/trim_road_network_test.cc \
+  -I. -o /tmp/trim_road_network_test
+
+/tmp/trim_road_network_test
+```
