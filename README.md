@@ -1,111 +1,44 @@
-# Town Network: Data Structures and Graph Algorithms
+# Town network
 
-A C++17 and Qt course project for managing towns, hierarchical taxation
-relationships, and a weighted road network.
+This repository contains a C++ course project for storing town data and
+relationships between towns. The program models both a master–vassal tax
+hierarchy and an undirected road network.
 
-The project demonstrates hash-based data storage, recursive tree operations,
-sorting, graph traversal, route finding, and cycle detection.
+I implemented the data structures and algorithms in
+`Algorithm_project/datastructures.cc` and
+`Algorithm_project/datastructures.hh`. The command parser and Qt interface
+were provided as part of the course framework.
 
-**Technologies:** C++17 · Qt 5 · qmake · C++ Standard Library
+## What is included
 
-## Overview
+- Adding, removing, searching, and sorting towns
+- Managing master–vassal relationships
+- Calculating tax paths, net tax, and the longest vassal chain
+- Adding and removing undirected roads
+- Finding an arbitrary route with depth-first search
+- Finding a route with the fewest towns using breadth-first search
+- Detecting cycles in the road network
 
-Each town has a unique identifier, name, coordinates, and tax value. Towns can
-form master–vassal relationships, creating a hierarchy used to calculate tax
-flows and paths.
+Road lengths are calculated from the Euclidean distance between town
+coordinates and rounded down to an integer.
 
-Towns can also be connected by undirected roads. Each road is weighted by the
-Euclidean distance between its endpoints, rounded down to an integer.
+## Build and run
 
-## Implemented algorithms
-
-| Capability | Approach | Status |
-|---|---|---|
-| Arbitrary route between towns | Depth-first search | Implemented |
-| Route with the fewest towns | Breadth-first search | Implemented |
-| Road-cycle detection | Depth-first search | Implemented |
-| Longest vassal path | Recursive tree traversal | Implemented |
-| Weighted shortest route | Dijkstra's algorithm | Pending |
-| Road-network trimming | — | Pending |
-
-The project also supports:
-
-- Adding, removing, and querying towns
-- Alphabetical and distance-based ordering
-- Master–vassal relationship management
-- Recursive net-tax calculation
-- Adding and removing roads
-- Querying neighboring towns
-
-## Quick start
-
-### Requirements
-
-- Qt 5 development tools
-- `qmake`
-- A C++17-compatible compiler
-- Make
-
-### Build
+The project requires Qt 5, `qmake`, Make, and a C++17-compatible compiler.
 
 ```bash
 cd Algorithm_project
 qmake program.pro
 make
-```
-
-### Run
-
-Start the application interactively:
-
-```bash
 ./prg2
 ```
 
-Alternatively, execute commands from an included example file:
+The program can also execute commands from an example file:
 
 ```bash
 ./prg2 example_inputs/example_input_1.txt
 ```
 
-## Project scope and authorship
+## Unfinished operations
 
-This repository originated as a course project.
-
-My implementation is primarily contained in:
-
-- `Algorithm_project/datastructures.cc`
-- `Algorithm_project/datastructures.hh`
-
-These files contain the data structures, town operations, taxation logic, and
-graph algorithms.
-
-The following Qt interface and command-processing files were provided as course
-scaffolding and are retained to run and visualize the implementation:
-
-- `mainwindow.cc`, `mainwindow.hh`, and `mainwindow.ui`
-- `mainprogram.cc` and `mainprogram.hh`
-
-## Repository structure
-
-```text
-Algorithm_project/
-├── datastructures.cc       Data structures and algorithm implementations
-├── datastructures.hh       Public interface and internal data types
-├── mainprogram.cc/.hh      Course-provided command framework
-├── mainwindow.cc/.hh/.ui   Course-provided Qt user interface
-├── example_inputs/         Example command sequences
-├── example-data.txt        Small example dataset
-├── towns-data.txt          Larger example dataset
-└── program.pro             qmake project configuration
-```
-
-## Current limitations
-
-The following declared operations currently throw `NotImplemented`:
-
-- `shortest_route`
-- `trim_road_network`
-
-`shortest_route` will be implemented using Dijkstra's algorithm in a separate,
-tested change. `trim_road_network` remains pending.
+`shortest_route` and `trim_road_network` are declared but not implemented yet.
