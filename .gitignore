@@ -1,0 +1,15 @@
+# Qt Creator
+*.pro.user
+*.pro.user.*
+*.autosave
+
+# qmake and compiler output
+Makefile
+Makefile.*
+.qmake.stash
+*.o
+moc_*
+ui_*.h
+qrc_*.cpp
+prg2
+build-*/
