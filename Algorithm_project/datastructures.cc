@@ -769,10 +769,95 @@ std::vector<TownID> Datastructures::road_cycle_route(TownID startid)
 
 
 
-//Not implemented
-std::vector<TownID> Datastructures::shortest_route(TownID /*fromid*/, TownID /*toid*/)
+std::vector<TownID> Datastructures::shortest_route(TownID fromid, TownID toid)
 {
-    throw NotImplemented("shortest_route()");
+    std::vector<TownID> route_;
+
+    // Check if both towns exist
+    if(!towns.count(fromid) || !towns.count(toid)){
+        route_.push_back(NO_TOWNID);
+        return route_;
+    }
+
+    // Handle same town
+    if(fromid == toid){
+        route_.push_back(fromid);
+        return route_;
+    }
+
+    // Binary-heap Dijkstra: O((V + E) log V) time.
+    std::unordered_map<TownID, Distance> distances;
+    std::unordered_map<TownID, TownID> predecessors;
+
+    // Initialize distances
+    for(auto& town_pair : towns){
+        distances[town_pair.first] = std::numeric_limits<Distance>::max();
+    }
+    distances[fromid] = 0;
+
+    // Priority queue: (distance, town_id)
+    // We use greater to get a min-heap
+    auto cmp = [](const std::pair<Distance, TownID>& a, const std::pair<Distance, TownID>& b) {
+        return a.first > b.first;
+    };
+    std::priority_queue<std::pair<Distance, TownID>, std::vector<std::pair<Distance, TownID>>, decltype(cmp)> pq(cmp);
+
+    pq.push({0, fromid});
+
+    while(!pq.empty()){
+        auto [current_dist, current_town] = pq.top();
+        pq.pop();
+
+        // Skip stale priority-queue entries
+        if(current_dist != distances.at(current_town)){
+            continue;
+        }
+
+        // Stop after destination receives final shortest distance
+        if(current_town == toid){
+            break;
+        }
+
+        // Relax edges
+        for(auto& neighbor_pair : towns[current_town].to_neighbours){
+            TownID neighbor_id = neighbor_pair.first;
+            Distance edge_weight = neighbor_pair.second;
+
+            if(current_dist > std::numeric_limits<Distance>::max() - edge_weight){
+                continue;
+            }
+
+            Distance candidate_dist = current_dist + edge_weight;
+            if(candidate_dist < distances[neighbor_id]){
+                distances[neighbor_id] = candidate_dist;
+                predecessors[neighbor_id] = current_town;
+                pq.push({candidate_dist, neighbor_id});
+            }
+        }
+    }
+
+    // Check if route exists
+    if(distances[toid] == std::numeric_limits<Distance>::max()){
+        // No route found
+        return route_;
+    }
+
+    // Reconstruct path
+    TownID current = toid;
+    while(current != fromid){
+        route_.push_back(current);
+
+        auto predecessor = predecessors.find(current);
+        if(predecessor == predecessors.end()){
+            return {};
+        }
+
+        current = predecessor->second;
+    }
+    route_.push_back(fromid);
+
+    std::reverse(route_.begin(), route_.end());
+    return route_;
 }
 
 Distance Datastructures::trim_road_network()

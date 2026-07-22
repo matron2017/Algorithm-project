@@ -240,9 +240,9 @@ public:
 
     std::vector<TownID> road_cycle_route(TownID startid);
 
+    std::vector<TownID> shortest_route(TownID, TownID);
 
     // Not implemented
-    std::vector<TownID> shortest_route(TownID, TownID);
     Distance trim_road_network();
 
 private:

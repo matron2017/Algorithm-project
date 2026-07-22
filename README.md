@@ -9,7 +9,7 @@ I implemented the data structures and algorithms in
 `Algorithm_project/datastructures.hh`. The command parser and Qt interface
 were provided as part of the course framework.
 
-## What is included
+## Features
 
 - Adding, removing, searching, and sorting towns
 - Managing master–vassal relationships
@@ -17,6 +17,7 @@ were provided as part of the course framework.
 - Adding and removing undirected roads
 - Finding an arbitrary route with depth-first search
 - Finding a route with the fewest towns using breadth-first search
+- Finding shortest routes by road length using Dijkstra's algorithm
 - Detecting cycles in the road network
 
 Road lengths are calculated from the Euclidean distance between town
@@ -41,4 +42,4 @@ The program can also execute commands from an example file:
 
 ## Unfinished operations
 
-`shortest_route` and `trim_road_network` are declared but not implemented yet.
+trim_road_network is declared but not implemented yet.
