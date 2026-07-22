@@ -53,6 +53,60 @@ The program can also execute commands from an example file:
 ./prg2 example_inputs/example_input_1.txt
 ```
 
+## Using the program
+
+After starting the application, enter commands through its command interface.
+Enter `help` to display the complete command list.
+
+### Example session
+
+```text
+add_town A Alpha (0,0) 10
+add_town B Beta (3,0) 20
+add_town C Gamma (6,0) 15
+
+add_vassalship B A
+town_vassals A
+total_net_tax A
+
+add_road A B
+add_road B C
+all_roads
+
+shortest_route A C
+trim_road_network
+all_roads
+
+quit
+```
+
+### Common commands
+
+| Command | Purpose |
+| --- | --- |
+| `add_town ID Name (x,y) tax` | Add a town with coordinates and tax value. |
+| `print_town ID` | Display one town. |
+| `all_towns` | List every town. |
+| `find_towns Name` | Find towns by name. |
+| `remove_town ID` | Remove a town. |
+| `add_vassalship VassalID TaxerID` | Assign a town as another town’s vassal. |
+| `town_vassals ID` | List the town’s direct vassals. |
+| `taxer_path ID` | Show the path from a town through its tax hierarchy. |
+| `longest_vassal_path ID` | Show the longest vassal chain starting from a town. |
+| `total_net_tax ID` | Calculate the town’s net tax. |
+| `add_road ID1 ID2` | Add an undirected road. |
+| `remove_road ID1 ID2` | Remove a road. |
+| `roads_from ID` | List roads connected to a town. |
+| `all_roads` | List every road and its length. |
+| `any_route ID1 ID2` | Find any route using depth-first search. |
+| `least_towns_route ID1 ID2` | Find a route with the fewest towns using breadth-first search. |
+| `shortest_route ID1 ID2` | Find the route with the smallest total road length using Dijkstra’s algorithm. |
+| `road_cycle_route ID` | Find a road cycle reachable from a town. |
+| `trim_road_network` | Remove redundant roads using Kruskal’s algorithm and report the remaining total length. |
+| `read "filename"` | Execute commands from a file. |
+| `help` | Display every available command. |
+| `quit` | Exit the program. |
+
 ## Tests
 
 Compile and run the shortest-route test with:
